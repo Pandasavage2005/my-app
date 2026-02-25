@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EduInsight Academic Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "accent-teal": "#14b8a6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#000000",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+        
+        /* Sidebar transition and states */
+        .sidebar-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sidebar-collapsed {
+            width: 5rem;
+        }
+        .sidebar-collapsed .logo-text,
+        .sidebar-collapsed .nav-text,
+        .sidebar-collapsed .sidebar-footer-text {
+            display: none;
+        }
+        .sidebar-collapsed .logo-container {
+            justify-content: center;
+            padding: 1rem;
+        }
+        .sidebar-collapsed nav {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+        .sidebar-collapsed nav a {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    </style>
+</head>
+
+<body class="bg-background-dark text-slate-100 min-h-screen">
+    <div class="flex h-screen overflow-hidden">
+        <aside id="sidebar"
+            class="w-72 bg-zinc-950 border-r border-white/10 flex flex-col shrink-0 z-30 sidebar-transition">
+            <div class="p-6 flex items-center gap-3 logo-container">
+                <div class="w-10 h-10 shrink-0 rounded-lg bg-primary flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined text-2xl">analytics</span>
+                </div>
+                <div class="logo-text">
+                    <h1 class="text-lg font-bold tracking-tight">EduInsight</h1>
+                    <p class="text-xs text-slate-400">Academic Intelligence</p>
+                </div>
+            </div>
+            <nav class="flex-1 px-4 py-4 space-y-1">
+                <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white font-medium"
+                    href="homepage">
+                    <span class="material-symbols-outlined shrink-0">dashboard</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 transition-colors"
+                    href="gpa calculator">
+                    <span class="material-symbols-outlined shrink-0">calculate</span>
+                    <span class="nav-text">GPA Calculator</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 transition-colors"
+                    href="cgpa-tracker">
+                    <span class="material-symbols-outlined shrink-0">monitoring</span>
+                    <span class="nav-text">CGPA Tracker</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 transition-colors"
+                    href="goal-tracker">
+                    <span class="material-symbols-outlined shrink-0">track_changes</span>
+                    <span class="nav-text">Goal Tracker</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/10 transition-colors"
+                    href="ai-assistant">
+                    <span class="material-symbols-outlined shrink-0">smart_toy</span>
+                    <span class="nav-text">AI Assistant</span>
+                </a>
+            </nav>
+            <div class="px-2 py-4 border-t border-white/5">
+                <a href="login"
+                    class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-black font-bold text-sm hover:brightness-110 transition-all group overflow-hidden">
+                    <span
+                        class="material-symbols-outlined shrink-0 group-hover:scale-110 transition-transform">login</span>
+                    <span class="nav-text">Sign In</span>
+                </a>
+            </div>
+        </aside>
+        <main class="flex-1 flex flex-col overflow-y-auto bg-background-dark">
+            <header
+                class="h-16 border-b border-white/10 px-8 flex items-center justify-between bg-black/50 backdrop-blur-md sticky top-0 z-20">
+                <button id="toggle-sidebar"
+                    class="p-2 -ml-2 rounded-lg text-slate-400 hover:bg-white/5 transition-colors">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div class="flex items-center gap-4">
+                    <button
+                        class="w-10 h-10 rounded-full flex items-center justify-center text-slate-500 hover:bg-white/5">
+                        <span class="material-symbols-outlined">notifications</span>
+                    </button>
+                    <div class="h-8 w-[1px] bg-white/10"></div>
+                    <div class="flex items-center gap-3 pl-2">
+                        <div
+                            class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary border border-primary/30">
+                            <span class="material-symbols-outlined">person</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="p-8 space-y-8 max-w-7xl mx-auto w-full">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                    <div>
+                        <h2 class="text-3xl font-bold tracking-tight">Welcome to EduInsight, Alex</h2>
+                        <p class="text-slate-400 mt-1">Real-time academic performance and predictive analysis.</p>
+                    </div>
+                    <button
+                        class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-lg font-semibold flex items-center gap-2 transition-all shadow-lg shadow-primary/20">
+                        <span class="material-symbols-outlined text-base">picture_as_pdf</span>
+                        Generate Analysis
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div
+                        class="bg-zinc-900 p-6 rounded-xl border border-white/10 shadow-sm relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <span class="material-symbols-outlined text-6xl text-primary">grade</span>
+                        </div>
+                        <p class="text-sm font-medium text-slate-400">Current GPA</p>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <h3 class="text-4xl font-bold text-white">3.80</h3>
+                            <span class="text-accent-teal text-sm font-bold flex items-center"><span
+                                    class="material-symbols-outlined text-sm">trending_up</span>+0.2</span>
+                        </div>
+                        <div class="mt-4 w-full bg-zinc-800 h-1.5 rounded-full">
+                            <div class="bg-accent-teal h-full rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-zinc-900 p-6 rounded-xl border border-white/10 shadow-sm relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <span class="material-symbols-outlined text-6xl text-primary">target</span>
+                        </div>
+                        <p class="text-sm font-medium text-slate-400">Target GPA</p>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <h3 class="text-4xl font-bold text-white">4.00</h3>
+                            <span class="text-slate-400 text-sm font-medium">Goal</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-4 italic">Estimated effort: High</p>
+                    </div>
+                    <div
+                        class="bg-zinc-900 p-6 rounded-xl border border-white/10 shadow-sm relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <span class="material-symbols-outlined text-6xl text-primary">history_edu</span>
+                        </div>
+                        <p class="text-sm font-medium text-slate-400">Credits Completed</p>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <h3 class="text-4xl font-bold text-white">92</h3>
+                            <span class="text-slate-500 text-sm font-medium">/ 120</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-4 uppercase tracking-wider font-bold">76% of curriculum</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 bg-zinc-900 p-8 rounded-xl border border-white/10 shadow-sm">
+                        <div class="flex justify-between items-center mb-8">
+                            <div>
+                                <h4 class="text-lg font-bold">Academic Trend</h4>
+                                <p class="text-sm text-slate-500">Semester Comparison</p>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="flex items-center gap-1.5 text-xs font-medium text-slate-400">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-primary/40"></span>
+                                    Target
+                                </span>
+                                <span class="flex items-center gap-1.5 text-xs font-medium text-slate-400">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+                                    Actual
+                                </span>
+                            </div>
+                        </div>
+                        <div class="h-64 flex flex-col justify-end">
+                            <div class="flex justify-center items-end gap-16 h-48 px-8">
+                                <div class="flex-1 flex flex-col items-center gap-2 max-w-[140px]">
+                                    <div class="w-full flex items-end gap-2 h-full">
+                                        <div class="flex-1 bg-primary/20 rounded-t-lg h-[80%] relative group">
+                                            <div
+                                                class="absolute -top-8 left-1/2 -translate-x-1/2 bg-zinc-950 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                                                Target: 3.5</div>
+                                        </div>
+                                        <div
+                                            class="flex-1 bg-primary rounded-t-lg h-[75%] relative group shadow-lg shadow-primary/20">
+                                            <div
+                                                class="absolute -top-8 left-1/2 -translate-x-1/2 bg-zinc-950 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                                                Actual: 3.4</div>
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="text-xs font-bold text-slate-400 uppercase tracking-tighter mt-2">Semester
+                                        1</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center gap-2 max-w-[140px]">
+                                    <div class="w-full flex items-end gap-2 h-full">
+                                        <div class="flex-1 bg-primary/20 rounded-t-lg h-[85%] relative group">
+                                            <div
+                                                class="absolute -top-8 left-1/2 -translate-x-1/2 bg-zinc-950 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                                                Target: 3.7</div>
+                                        </div>
+                                        <div
+                                            class="flex-1 bg-accent-teal rounded-t-lg h-[92%] relative group shadow-lg shadow-teal-500/20">
+                                            <div
+                                                class="absolute -top-8 left-1/2 -translate-x-1/2 bg-zinc-950 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                                                Actual: 3.8</div>
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="text-xs font-bold text-slate-400 uppercase tracking-tighter mt-2">Semester
+                                        2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-gradient-to-br from-primary via-blue-700 to-accent-teal rounded-xl p-8 text-white shadow-xl flex flex-col">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-3xl">auto_awesome</span>
+                            <h4 class="text-xl font-bold">EduInsight AI</h4>
+                        </div>
+                        <p class="text-white/90 mb-8 text-sm leading-relaxed">"You are currently on track to exceed your
+                            4.0 target. Focus on <strong>Advanced Algorithms</strong> as it has the highest credit
+                            weight this semester."</p>
+                        <div class="space-y-4 flex-1">
+                            <div
+                                class="bg-white/10 hover:bg-white/20 p-4 rounded-lg cursor-pointer transition-colors border border-white/10 group">
+                                <p class="text-[10px] font-bold uppercase tracking-widest mb-1 opacity-70">Focus Area
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <p class="text-sm font-medium">Data Structures</p>
+                                    <span
+                                        class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-white/10 hover:bg-white/20 p-4 rounded-lg cursor-pointer transition-colors border border-white/10 group">
+                                <p class="text-[10px] font-bold uppercase tracking-widest mb-1 opacity-70">Upcoming Exam
+                                </p>
+                                <div class="flex justify-between items-center">
+                                    <p class="text-sm font-medium">Physics Finals (4 days)</p>
+                                    <span
+                                        class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">event</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full mt-8 bg-white text-primary font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition-all">
+                            Consult Assistant
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Analytics Toolkit</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <a class="group bg-zinc-900 p-6 rounded-xl border border-white/10 hover:border-primary transition-all shadow-sm"
+                            href="gpa calculator">
+                            <div
+                                class="w-12 h-12 rounded-lg bg-accent-teal/10 text-accent-teal flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-3xl">calculate</span>
+                            </div>
+                            <h5 class="font-bold mb-1">GPA Calculator</h5>
+                            <p class="text-xs text-slate-500">Simulate semester outcomes</p>
+                        </a>
+                        <a class="group bg-zinc-900 p-6 rounded-xl border border-white/10 hover:border-primary transition-all shadow-sm"
+                            href="#">
+                            <div
+                                class="w-12 h-12 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-3xl">insights</span>
+                            </div>
+                            <h5 class="font-bold mb-1">CGPA Forecaster</h5>
+                            <p class="text-xs text-slate-500">Long-term grade prediction</p>
+                        </a>
+                        <a class="group bg-zinc-900 p-6 rounded-xl border border-white/10 hover:border-primary transition-all shadow-sm"
+                            href="#">
+                            <div
+                                class="w-12 h-12 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-3xl">flag</span>
+                            </div>
+                            <h5 class="font-bold mb-1">Milestones</h5>
+                            <p class="text-xs text-slate-500">Set and track academic goals</p>
+                        </a>
+                        <a class="group bg-zinc-900 p-6 rounded-xl border border-white/10 hover:border-primary transition-all shadow-sm"
+                            href="#">
+                            <div
+                                class="w-12 h-12 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-3xl">data_exploration</span>
+                            </div>
+                            <h5 class="font-bold mb-1">Grade Audit</h5>
+                            <p class="text-xs text-slate-500">Transcript anomaly detection</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <footer class="mt-auto p-8 border-t border-white/10 text-center">
+                <p class="text-sm text-slate-500">© 2024 EduInsight. Powered by Intelligent Academic Analytics.</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Sidebar Toggle
+        document.getElementById('toggle-sidebar').addEventListener('click', function () {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('sidebar-collapsed');
+
+            const icon = this.querySelector('.material-symbols-outlined');
+            if (sidebar.classList.contains('sidebar-collapsed')) {
+                icon.textContent = 'menu_open';
+            } else {
+                icon.textContent = 'menu';
+            }
+        });
+    </script>
+</body>
+
+</html>
